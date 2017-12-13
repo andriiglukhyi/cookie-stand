@@ -23,7 +23,6 @@ var Stores = function( storeName, minCust, maxCust, avgCookies) {
   allStores.push(this);
   this.rundNumCust = function() {
     for(var i = 0; i < hours.length; i++){
-      console.log('sdf');
       this.custsEachHour.push(random(this.mnCust, this.mxCust));
     }
   };
@@ -35,30 +34,38 @@ var Stores = function( storeName, minCust, maxCust, avgCookies) {
     }
   };
   this.render = function(){
-    this.countCookieEachHour()
-    var trEl = document.createElement('tr');
-    var tdEl = document.createElement('td');
-    tdEl.textContent = this.name;
-    trEl.appendChild(tdEl);
+    this.rundNumCust();
+    this.countCookieEachHour();
 
-    tdEl = document.createElement('td');
-      // give td content (Color for an individual cat
-    tdEl.textContent = this.cookieEachHour[i];
-    trEl.appendChild(tdEl);
+    var row = document.createElement('tr');
+    var col = document.createElement('td');
+
+    col.textContent = this.Name;
+    row.appendChild(col);
+
+    for(var i=0; i<hours.length; i++) {
+      col = document.createElement('td');
+      col.textContent = this.cookieEachHour[i];
+      row.appendChild(col);
+    }
+
+    col = document.createElement('td');
+    col.textContent =
 
 
 
-    store.appendChild(trEl);
+
+    store.appendChild(row);
 };
 }
 
 ////////////////////////////////////////////////////////////////
 
 new Stores('1st and pike', 23, 65, 6.3);
-new Stores('qwer', 15, 30,5);
-new Stores('pike2', 12, 34, 4);
-new Stores('pike3', 2, 34, 2);
-new Stores('pi333', 5, 31, 4);
+new Stores('SeaTac Airport', 3, 24, 1.2);
+new Stores('Seattle Center', 11, 38, 3.7);
+new Stores('Capitoll Hill', 20, 38, 2.3);
+new Stores('Alki', 2, 16, 4.6);
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -66,36 +73,36 @@ new Stores('pi333', 5, 31, 4);
 
 function makeHeaderRow() {
   // create tr
-  var trEl = document.createElement('tr');
+  var row = document.createElement('tr');
   // create th
-  var thEl = document.createElement('th');
+  var col = document.createElement('th');
   // give th content (Name for an individual cat)
-  thEl.textContent = 'Stores';
+  col.textContent = 'Stores';
   // append the th
-  trEl.appendChild(thEl);
+  row.appendChild(col);
 
 
   for(var i=0; i<hours.length; i++) {
-    thEl = document.createElement('th');
-    thEl.textContent = hours[i];
-    trEl.appendChild(thEl);
+    col = document.createElement('th');
+    col.textContent = hours[i];
+    row.appendChild(col);
   }
   // create th
 
 
-  thEl = document.createElement('th');
+  col = document.createElement('th');
   // give th content (Color for an individual cat)
-  thEl.textContent = 'Total';
+  col.textContent = 'Total';
   // append the tr to the table
-  trEl.appendChild(thEl);
-  store.appendChild(trEl);
+  row.appendChild(col);
+  store.appendChild(row);
 }
 
 /////////////////////////////////////////////////
 
 function renderStore(){
   for(var i = 0; i < allStores.length; i++){
-    console.log(i);
+
     allStores[i].render();
   }
 }
