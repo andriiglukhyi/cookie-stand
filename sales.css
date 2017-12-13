@@ -1,0 +1,31 @@
+
+* {
+  font-family: 'Arial';
+}
+
+body {
+  background: #564527;
+}
+
+table {
+  width:960 px;
+  background: 	#3E3625;
+  margin-top: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td {
+	padding: 10px;
+	border: solid black;
+  background: white;
+  color::	#A64F2B
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th {
+	background-color: #D9B778;
+	color: :#A64F2B;

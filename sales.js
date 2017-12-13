@@ -1,157 +1,111 @@
 'use strict';
 
-var firstandPike = {
-  minCust : 23,
-  maxCust : 65,
-  avgCookie : 6.3,
-  rundNumCust : function() {
-    min=this.minCust;
-    max=this.maxCust;
-    return  Math.floor(Math.random() * (max - min)) + min;
-  },
-  amountOfCookies : function() {
-    return this.rundNumCust * this.avgCookie;
-  }
-}
-var seatac = {
-  minCust : 3,
-  maxCust : 24,
-  avgCookie : 1.2,
-  rundNumCust : function() {
-    min=this.minCust;
-    max=this.maxCust;
-    return  Math.floor(Math.random() * (max - min)) + min;
-  },
-  amountOfCookies : function() {
-    return this.rundNumCust * this.avgCookie;
-  }
-}
-var seattleCenter = {
-  minCust : 11,
-  maxCust : 38,
-  avgCookie : 3.7,
-  rundNumCust : function() {
-    min=this.minCust;
-    max=this.maxCust;
-    return  Math.floor(Math.random() * (max - min)) + min;
-  },
-  amountOfCookies : function() {
-    return this.rundNumCust * this.avgCookie;
-  }
-}
-var capitollHill = {
-  minCust : 20,
-  maxCust : 38,
-  avgCookie : 2.3,
-  rundNumCust : function() {
-    min=this.minCust;
-    max=this.maxCust;
-    return  Math.floor(Math.random() * (max - min)) + min;
-  },
-  amountOfCookies : function() {
-    return this.rundNumCust * this.avgCookie;
-  }
-}
-var alki = {
-  minCust : 2,
-  maxCust : 16,
-  avgCookie : 4.6,
-  rundNumCust : function() {
-    min=this.minCust;
-    max=this.maxCust;
-    return  Math.floor(Math.random() * (max - min)) + min;
-  },
-  amountOfCookies : function() {
-    return this.rundNumCust * this.avgCookie;
-  }
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min; // via MDN docs
 }
 
 var hours = ['6am', '7am', '8am', '9am', '9am', '10am', '11am','12pm','12pm','1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',]
 
-function makeHTML() {
+var allStores = []
+var store = document.getElementById('stores')
 
-  // 1st exemple
-  var container = document.createElement('div');
-  container.innerHTML = '<p>' + '1st and Pike' + '</p>';
-  document.body.appendChild(container);
 
-  var list = document.createElement('ul');
-  var listArr = [];
-  for (var i = 0; i < hours.length; i++) {
-    listArr.push('<li>' + hours[i] + ' : ' + firstandPike.amountOfCookies + '</li>');
-  }
-  var fullList = listArr.join('');
-  list.innerHTML = fullList;
-  document.body.appendChild(list);
+/////////////////////////////////////////////////////////////
 
-  //2nd SeaTac Airport
+var Stores = function( storeName, minCust, maxCust, avgCookies) {
+  this.Name = storeName;
+  this.mnCust = minCust;
+  this.mxCust = maxCust;
+  this.avCookies = avgCookies;
+  this.custsEachHour = [];
+  this.cookieEachHour = [];
+  this.total = 0;
+  allStores.push(this);
+  this.rundNumCust = function() {
+    for(var i = 0; i < hours.length; i++){
+      this.custsEachHour.push(random(this.mnCust, this.mxCust));
+    }
+  };
+  this.countCookieEachHour = function() {
+    this.rundNumCust();
+    for(var i = 0; i < hours.length; i++){
+      var oneHour = Math.ceil(this.custsEachHour[i] * this.avCookies);
+      this.cookieEachHour.push(oneHour);
+    }
+  };
+  this.render = function(){
+    this.rundNumCust();
+    this.countCookieEachHour();
 
-  var container = document.createElement('div');
-  container.innerHTML = '<p>' + 'SeaTac Airport' + '</p>';
-  document.body.appendChild(container);
+    var row = document.createElement('tr');
+    var col = document.createElement('td');
 
-  var list = document.createElement('ul');
-  var listArr = [];
-  for (var i = 0; i < hours.length; i++) {
-    listArr.push('<li>' + hours[i] + ' : ' + seatac.amountOfCookies + '</li>');
-  }
-  var fullList = listArr.join('');
-  list.innerHTML = fullList;
-  document.body.appendChild(list);
+    col.textContent = this.Name;
+    row.appendChild(col);
 
-  // seattleCenter
+    for(var i=0; i<hours.length; i++) {
+      col = document.createElement('td');
+      col.textContent = this.cookieEachHour[i];
+      row.appendChild(col);
+    }
 
-  var container = document.createElement('div');
-  container.innerHTML = '<p>' + 'Seattle center' + '</p>';
-  document.body.appendChild(container);
-
-  var list = document.createElement('ul');
-  var listArr = [];
-  for (var i = 0; i < hours.length; i++) {
-    listArr.push('<li>' + hours[i] + ' : ' + seattleCenter.amountOfCookies + '</li>');
-  }
-  var fullList = listArr.join('');
-  list.innerHTML = fullList;
-  document.body.appendChild(list);
-
-  // capitollHill
-
-  var container = document.createElement('div');
-  container.innerHTML = '<p>' + 'Capitoll Hill' + '</p>';
-  document.body.appendChild(container);
-
-  var list = document.createElement('ul');
-  var listArr = [];
-  for (var i = 0; i < hours.length; i++) {
-    listArr.push('<li>' + hours[i] + ' : ' + seattleCenter.amountOfCookies + '</li>');
-  }
-  var fullList = listArr.join('');
-  list.innerHTML = fullList;
-  document.body.appendChild(list);
-
-  //alki
-
-  var container = document.createElement('div');
-  container.innerHTML = '<p>' + 'Alkai' + '</p>';
-  document.body.appendChild(container);
-
-  var list = document.createElement('ul');
-  var listArr = [];
-  for (var i = 0; i < hours.length; i++) {
-    listArr.push('<li>' + hours[i] + ' : ' + alki.amountOfCookies + '</li>');
-  }
-  var fullList = listArr.join('');
-  list.innerHTML = fullList;
-  document.body.appendChild(list);
+    col = document.createElement('td');
+    col.textContent =
 
 
 
 
-
-
-
-
-
+    store.appendChild(row);
+};
 }
 
-makeHTML();
+////////////////////////////////////////////////////////////////
+
+new Stores('1st and pike', 23, 65, 6.3);
+new Stores('SeaTac Airport', 3, 24, 1.2);
+new Stores('Seattle Center', 11, 38, 3.7);
+new Stores('Capitoll Hill', 20, 38, 2.3);
+new Stores('Alki', 2, 16, 4.6);
+
+
+/////////////////////////////////////////////////////////////////////////
+
+
+function makeHeaderRow() {
+  // create tr
+  var row = document.createElement('tr');
+  // create th
+  var col = document.createElement('th');
+  // give th content (Name for an individual cat)
+  col.textContent = 'Stores';
+  // append the th
+  row.appendChild(col);
+
+
+  for(var i=0; i<hours.length; i++) {
+    col = document.createElement('th');
+    col.textContent = hours[i];
+    row.appendChild(col);
+  }
+  // create th
+
+
+  col = document.createElement('th');
+  // give th content (Color for an individual cat)
+  col.textContent = 'Total';
+  // append the tr to the table
+  row.appendChild(col);
+  store.appendChild(row);
+}
+
+/////////////////////////////////////////////////
+
+function renderStore(){
+  for(var i = 0; i < allStores.length; i++){
+
+    allStores[i].render();
+  }
+}
+
+makeHeaderRow();
+renderStore();
