@@ -4,13 +4,17 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; // via MDN docs
 }
 
-var hours = ['6am', '7am', '8am', '9am', '9am', '10am', '11am','12pm','12pm','1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',]
 
-var allStores = []
+var hours = ['6am', '7am', '8am', '9am', '9am', '10am', '11am','12pm','12pm','1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',]
 var store = document.getElementById('stores')
 
 
+
+var allStores = []
+
 /////////////////////////////////////////////////////////////
+
+//constractor
 
 var Stores = function( storeName, minCust, maxCust, avgCookies) {
   this.Name = storeName;
@@ -20,7 +24,6 @@ var Stores = function( storeName, minCust, maxCust, avgCookies) {
   this.custsEachHour = [];
   this.cookieEachHour = [];
   this.total = 0;
-  allStores.push(this);
   this.rundNumCust = function() {
     for(var i = 0; i < hours.length; i++){
       this.custsEachHour.push(random(this.mnCust, this.mxCust));
@@ -31,8 +34,12 @@ var Stores = function( storeName, minCust, maxCust, avgCookies) {
     for(var i = 0; i < hours.length; i++){
       var oneHour = Math.ceil(this.custsEachHour[i] * this.avCookies);
       this.cookieEachHour.push(oneHour);
+      this.total +=oneHour;
     }
   };
+
+  allStores.push(this);
+
   this.render = function(){
     this.rundNumCust();
     this.countCookieEachHour();
@@ -50,7 +57,8 @@ var Stores = function( storeName, minCust, maxCust, avgCookies) {
     }
 
     col = document.createElement('td');
-    col.textContent =
+    col.textContent = this.total;
+    row.appendChild(col);
 
 
 
@@ -87,19 +95,42 @@ function makeHeaderRow() {
     col.textContent = hours[i];
     row.appendChild(col);
   }
-  // create th
-
-
   col = document.createElement('th');
-  // give th content (Color for an individual cat)
+
   col.textContent = 'Total';
-  // append the tr to the table
+
   row.appendChild(col);
   store.appendChild(row);
 }
 
+
 /////////////////////////////////////////////////
 
+function totalRow() {
+  // create tr
+  var row = document.createElement('tr');
+  // create th
+  var col = document.createElement('td');
+  // give th content (Name for an individual cat)
+  var a = 0;
+  col.textContent = 'Total for each hour';
+  // append the th
+  row.appendChild(col);
+
+
+  // for(var i=0; i<hours.length; i++) {
+  //   col = document.createElement('td');
+  //   for (var i=0; i<allStores.length; i++ ) {
+  //     a += allStores[i].cookieEachHour[i];
+  //       }
+  //   console.log('aa', a);
+  //   col.textContent = a;
+  //   row.appendChild(col);
+  // }
+  store.appendChild(row);
+}
+
+////////////////////////////////////
 function renderStore(){
   for(var i = 0; i < allStores.length; i++){
 
@@ -109,3 +140,4 @@ function renderStore(){
 
 makeHeaderRow();
 renderStore();
+totalRow();
