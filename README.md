@@ -1,8 +1,8 @@
 # Today I Learned:
 
-  - Object model
-  - Creatimg an objest
-  - Updating an object
-  - Adding and removing properties
-  - "THIS"
-  - Table model
+- Table model
+- How to deal with errors
+- A debugging workflow
+- Breakpoints
+- Debugging tips
+- Common errors
