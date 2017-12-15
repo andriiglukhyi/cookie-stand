@@ -1,6 +1,8 @@
 
 * {
   font-family: 'Arial';
+  text-align: center;
+
 }
 
 body {
@@ -23,6 +25,7 @@ td {
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
+
 }
 
 th {
@@ -56,3 +59,11 @@ input[type="text"] {
     margin-left: auto;
     margin-right: auto;
   }
+
+header{
+  margin-top:100px
+}
+
+form{
+  font-size: 23px
+}
