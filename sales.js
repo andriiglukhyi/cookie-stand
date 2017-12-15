@@ -68,9 +68,6 @@ new Stores('Alki', 2, 16, 4.6);
 
 ////////////////////////////////////////////////////////////////
 
-
-
-
 function makeHeaderRow() {
   // create tr
   var row = document.createElement('tr');
@@ -101,7 +98,14 @@ function renderStore(){
     allStores[i].render();
   }
 }
+var newStores = []
 
+function renderStorenew(){
+  for(var i = 0; i < newStores.length; i++){
+
+    newStores[i].render();
+  }
+}
 
 function formData(event) {
   event.preventDefault();
@@ -110,34 +114,12 @@ var name = event.target.storeName.value;
 var maxC = event.target.maxCust.value;
 var minC = event.target.minCust.value;
 var avgC = event.target.avgCookies.value;
-allStores.push(new Stores(name, maxC, minC, avgC));
+newStores.push(new Stores(name, maxC, minC, avgC));
   store.reset();
-  renderStore()
+  renderStorenew();
 }
 
-// function createTable(){
-//
-//   this.rundNumCust();
-//   this.countCookieEachHour();
-//
-//   var row = document.createElement('tr');
-//   var col = document.createElement('td');
-//
-//   col.textContent = this.Name;
-//   row.appendChild(col);
-//
-//   for(var i=0; i<hours.length; i++) {
-//     col = document.createElement('td');
-//     col.textContent = this.cookieEachHour[i];
-//     row.appendChild(col);
-//   }
-//
-//   col = document.createElement('td');
-//   col.textContent = this.total;
-//   row.appendChild(col);
-//
-// }
-//
+
 
 
 makeHeaderRow();
