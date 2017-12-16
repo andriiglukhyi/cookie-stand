@@ -51,6 +51,8 @@ var Stores = function( storeName, minCust, maxCust, avgCookies) {
       col = document.createElement('td');
       col.textContent = this.cookieEachHour[i];
       row.appendChild(col);
+      // row.setAttribute('id', 'total-row')
+      // document.getElementById('total-row').remove()
     }
 
     col = document.createElement('td');
@@ -65,8 +67,6 @@ new Stores('SeaTac Airport', 3, 24, 1.2);
 new Stores('Seattle Center', 11, 38, 3.7);
 new Stores('Capitoll Hill', 20, 38, 2.3);
 new Stores('Alki', 2, 16, 4.6);
-
-////////////////////////////////////////////////////////////////
 
 function makeHeaderRow() {
   // create tr
@@ -98,30 +98,75 @@ function renderStore(){
     allStores[i].render();
   }
 }
-var newStores = []
+////////////////////////////////////////////////////////////////
 
-function renderStorenew(){
-  for(var i = 0; i < newStores.length; i++){
-
-    newStores[i].render();
-  }
-}
+store.addEventListener('submit', formData);
 
 function formData(event) {
   event.preventDefault();
 
-var name = event.target.storeName.value;
-var maxC = event.target.maxCust.value;
-var minC = event.target.minCust.value;
-var avgC = event.target.avgCookies.value;
-newStores.push(new Stores(name, maxC, minC, avgC));
-  store.reset();
-  renderStorenew();
+    var name = event.target.storeName.value;
+    var maxC = event.target.maxCust.value;
+    var minC = event.target.minCust.value;
+    var avgC = event.target.avgCookies.value;
+    new Stores(name, maxC, minC, avgC);
+    store.reset();
+    allStores[allStores.length - 1].render();
+
+  // renderStorenew();
 }
 
+function makeTotalRow(){
+  var row = document.createElement('tr');
+  var col = document.createElement('td');
 
+  col.textContent = 'Total';
+  row.appendChild(col);
+
+  // var a = 0;
+
+  for(var hour = 0; hour < hours.length; hour++) {
+    col = document.createElement('td');
+    var a =0;
+    for(var store = 0; store < allStores.length; store++) {
+      // console.log(allStores[store].cookieEachHour[hour]);
+      a += allStores[store].cookieEachHour[hour];
+    }
+    col.textContent=a;
+    row.appendChild(col);
+  }
+  store.appendChild(row);
+}
+
+//     }
+//     col.textContent = a;
+//     }
+//   }
+
+
+
+
+
+
+  // row.appendChild(col);
+
+
+    //
+    // col = document.createElement('th');
+    //
+    // col.textContent = 'Total of ';
+    //
+    // row.appendChild(col);
+
+
+// function renderStorenew(){
+//   for(var i = 0; i < newStores.length; i++){
+//
+//     newStores[i].render();
+//   }
+// }
 
 
 makeHeaderRow();
 renderStore();
-store.addEventListener('submit', formData);
+makeTotalRow();
